@@ -1,51 +1,114 @@
-import { useThree, extend, useFrame } from '@react-three/fiber'
-import { useRef } from 'react'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import CustomObject from './CustomObject.jsx'
+import { useThree, extend, useFrame } from "@react-three/fiber";
+import { useRef } from "react";
+import { Center, Text3D, PointerLockControls } from "@react-three/drei";
+import CustomObject from "./CustomObject.jsx";
+import { useLoader } from "@react-three/fiber";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
-extend({ OrbitControls })
+// import { FontLoader } from 'three/examples/jsm/loaders/FontLoader'
+import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
 
-export default function Experience()
-{
-    const { camera, gl } = useThree()
+extend({ TextGeometry });
 
-    const cubeRef = useRef()
-    const groupRef = useRef()
+export default function Experience() {
 
-    useFrame((state, delta) =>
-    {
-        // const angle = state.clock.elapsedTime
-        // state.camera.position.x = Math.sin(angle) * 8
-        // state.camera.position.z = Math.cos(angle) * 8
-        // state.camera.lookAt(0, 0, 0)
+  
+  const { camera, gl } = useThree();
+  const controlsRef = useRef();
 
-        cubeRef.current.rotation.y += delta
-        // groupRef.current.rotation.y += delta
-    })
+  const hub = useLoader(GLTFLoader, "./hub.glb");
+  const fire = useLoader(GLTFLoader, './bonfire.glb')
+  const everest = useLoader(GLTFLoader, "./everest.glb");
 
-    return <>
-        <orbitControls args={ [ camera, gl.domElement ] } />
+  // const clock = new THREE.Clock()
 
-        <directionalLight position={ [ 1, 2, 3 ] } intensity={ 1.5 } />
-        <ambientLight intensity={ 0.5 } />
+  const tick = () =>
+  {
+    const elapsedTime = clock.getElapsedTime();
 
-        <group ref={ groupRef }>
-            <mesh position-x={ - 2 }>
-                <sphereGeometry />
-                <meshStandardMaterial color="orange" />
-            </mesh>
+  }
+  // console.log(fire)
 
-            <mesh ref={ cubeRef } rotation-y={ Math.PI * 0.25 } position-x={ 2 } scale={ 1.5 }>
-                <boxGeometry />
-                <meshStandardMaterial color="mediumpurple" />
-            </mesh>
-        </group>
+  // const cubeRef = useRef()
+  // const groupRef = useRef()
 
-        <mesh position-y={ - 1 } rotation-x={ - Math.PI * 0.5 } scale={ 10 }>
-            <planeGeometry />
-            <meshStandardMaterial color="greenyellow" />
-        </mesh>
+  // const font2 = new FontLoader().parse(font);
 
-        <CustomObject />
+  useFrame((state, delta) => {
+    // const angle = state.clock.elapsedTime
+    // state.camera.position.x = Math.sin(angle) * 8
+    // state.camera.position.z = Math.cos(angle) * 8
+    // state.camera.lookAt(0, 0, 0)
+    // cubeRef.current.rotation.y += delta
+    // groupRef.current.rotation.y += delta
+    groupRef.current.position.y = Math.sin(delta / 7)
+    // groupRef.current.rotation.x += Math.cos(delta)
+
+  });
+
+
+
+  const groupRef = useRef();  
+
+  return (
+    <>
+      <PointerLockControls ref={controlsRef} args={[camera, gl.domElement]} />
+
+      {/* <pointerLockControls args={[camera, gl.domElement]} /> */}
+
+      <directionalLight position={[1, 2, 3]} intensity={1.5} />
+      <ambientLight intensity={0.5} />
+
+      <group ref={ groupRef}>
+        <Center position-y={10} position-x={1} position-z={-4} rotation-y={0.7}>
+          <Text3D font="./Fredoka One_Regular.json">
+            Welcome
+            <meshNormalMaterial />
+          </Text3D>
+        </Center>
+
+        <Center
+          position-y={8.5}
+          position-x={1}
+          position-z={-4}
+          rotation-y={0.7}
+        >
+          <Text3D font="./Fredoka One_Regular.json">
+            To
+            <meshNormalMaterial />
+          </Text3D>
+        </Center>
+
+        <Center position-y={7} position-x={1} position-z={-4} rotation-y={0.7}>
+          <Text3D font="./Fredoka One_Regular.json">
+            The CampVerse
+            <meshNormalMaterial />
+          </Text3D>
+        </Center>
+      </group>
+
+      
+
+      {/* <Center>
+      <primitive object={fire.scene} />
+      </Center> */}
+
+      <Center>
+        <primitive object={hub.scene} />
+      </Center>
+      <Center position-y={4.} position-x={8.5} position-z={6.} >
+         <primitive object={fire.scene} scale = {0.1}/>
+        </Center>
+        <Center position-y={33} position-x={20} position-z={6.} >
+         <primitive object={everest.scene} scale = {2}/>
+        </Center>
+
+
+      <mesh position-y={-1} rotation-x={-Math.PI * 0.5} scale={10}>
+        <planeGeometry />
+        <meshStandardMaterial color="greenyellow" />
+      </mesh>
     </>
+  );
 }

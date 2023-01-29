@@ -70,7 +70,7 @@ export default function Experience() {
   const desertRef = useRef();
   useFrame((state, dt) => {
     state.camera.position.lerp(p, THREE.MathUtils.damp(0, 1, 0.4, dt));
-    forestRef.current.rotation.y += 0.005;
+    forestRef.current.rotation.y += 0.003;
     everestRef.current.rotation.y += 0.001;
     desertRef.current.rotation.y += 0.003;
   });
@@ -178,6 +178,75 @@ export default function Experience() {
 
       <Box
         // castShadow
+        args={[0.5, 0.5, 0.5]}
+        position={[-26, 3.8, 45]}
+        userData={{ viewPos: [1, 1, 1] }}
+        onClick={(e) => {
+          e.stopPropagation();
+          if (clicked === e.object) {
+            setClicked(null);
+            window.open("https://en.wikipedia.org/wiki/Western_Desert_(Egypt)");
+          } else {
+            setClicked(e.object);
+          }
+        }}
+        onPointerMissed={() => {
+          setClicked(null);
+        }}
+      >
+        <meshStandardMaterial
+          color={0xffffff}
+          transparent={true}
+          opacity={0.0}
+        />
+      </Box>
+
+      <Box
+        // castShadow
+        args={[0.5, 0.5, 0.5]}
+        position={[-42, 20.7, -7.5]}
+        userData={{ viewPos: [0, 0, 0] }}
+        onClick={(e) => {
+          if (clicked === e.object) {
+            setClicked(null);
+            window.open("https://www.nationalgeographic.com/adventure/article/everest-base-camp-daily-life-perpetual-planet")
+
+          } else {
+            setClicked(e.object);
+          }
+        }}
+      >
+        <meshStandardMaterial
+          color={"red"}
+          transparent={true}
+          opacity={0.0}
+        />
+      </Box>
+
+      <Box
+        // castShadow
+        args={[0.25, 0.25, 0.25]}
+        position={[8.5, 4., 6]}
+        userData={{ viewPos: [0, 0, 0] }}
+        onClick={(e) => {
+          if (clicked === e.object) {
+            setClicked(null);
+            window.open("https://media.tenor.com/rQnJEmv72o4AAAAC/jack-jack-on-fire.gif")
+
+          } else {
+            setClicked(e.object);
+          }
+        }}
+      >
+        <meshStandardMaterial
+          color={"red"}
+          transparent={true}
+          opacity={0.0}
+        />
+      </Box>
+
+      <Box
+        // castShadow
         args={[11, 11, 11]}
         position={[-30, -2, 40]}
         userData={{ viewPos: [3, 6.5, 2] }}
@@ -234,6 +303,31 @@ export default function Experience() {
       <Center position-y={14.9} position-x={8.4} position-z={-10.5}>
         <primitive object={forest_tent.scene} scale={0.001} />
       </Center>
+
+      <Box
+        // castShadow
+        args={[0.5, 0.5, 0.5]}
+        position={[8.4, 14.9, -10.5]}
+        userData={{ viewPos: [1, 1, 1] }}
+        onClick={(e) => {
+          e.stopPropagation();
+          if (clicked === e.object) {
+            setClicked(null);
+            window.open("https://www.nps.gov/seki/planyourvisit/conditions.htm");
+          } else {
+            setClicked(e.object);
+          }
+        }}
+        onPointerMissed={() => {
+          setClicked(null);
+        }}
+      >
+        <meshStandardMaterial
+          color={0xffffff}
+          transparent={true}
+          opacity={0.0}
+        />
+      </Box>
 
       <Center position-y={20.7} position-x={-42} position-z={-7.5}>
         <primitive object={everest_tent.scene} scale={0.3} />

@@ -17,7 +17,10 @@ root.render(
             fov: 45,
             near: 0.1,
             far: 200,
-            position: [ 9, 4.25, 7 ]
+            position: [ 9, 4.25, 7 ]//fireplace
+            // position: [ 40,5, 6 ]
+            // position: [ 9, 16, -12 ]//forest
+            // position: [9, 15, -12 ]
         } }
     >
         <Experience />

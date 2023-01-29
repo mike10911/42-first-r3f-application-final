@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom/client'
 import { Canvas } from '@react-three/fiber'
 import Experience from './Experience.jsx'
 import * as THREE from 'three'
+import soundfile  from './hub.mp3'
 
 const root = ReactDOM.createRoot(document.querySelector('#root'))
-
+new Audio(soundfile).play()
 root.render(
     <Canvas
         gl={ {
